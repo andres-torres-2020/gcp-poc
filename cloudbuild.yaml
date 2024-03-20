@@ -1,8 +1,8 @@
 # This configuration builds a Docker image and stores logs in a GCS bucket
 
 # Specify the source code repository URL
-source:
-  repoUrl: https://github.com/andres-torres-2020/gcp-poc.git  # Replace with your repository URL
+# source:
+#   repoUrl: https://github.com/andres-torres-2020/gcp-poc.git  # Replace with your repository URL
   #branch: main  # Replace with your desired branch
 
 # Define the build steps
@@ -10,7 +10,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'  # Use the Cloud Build Docker builder
   args: ['build', '-t', 'gcr.io/gcp-poc-385800/gcp-poc:$COMMIT_SHA', '.']  # Build the image from Dockerfile
 options:
-  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+  defaultLogsBucketBehavior: USER_OWNED_BUCKET
 
 # Specify the GCS bucket for logs
 logging:
