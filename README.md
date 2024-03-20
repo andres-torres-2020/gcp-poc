@@ -45,7 +45,7 @@ gcloud builds triggers create github \
   --dockerfile-dir="/" \
   --dockerfile="Dockerfile" \
   --project=$PROJECT_ID \
-  --repository=$REPOSITORY \
+  --repository=projects/$PROJECT_ID/locations/$REGION/connections/$CONNECTION_NAME/repositories/$REPOSITORY \
   --service-account=projects/$PROJECT_ID/serviceAccounts/$SERVICE_ACCOUNT_ID \
   --branch-pattern="^main$" \
   --region=$REGION
