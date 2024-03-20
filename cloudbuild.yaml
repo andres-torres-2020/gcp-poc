@@ -1,0 +1,1 @@
+logsBucket: "gs://fc-poc-images/demo-cloudbuild-logs"
