@@ -6,7 +6,6 @@ ENV PORT=8080
 WORKDIR /workspace
 
 COPY . /workspace
-RUN npm update
+RUN npm update && npm install @google-cloud/functions-framework
 
-CMD ["node", "index.js"]
-# ENTRYPOINT ["npm", "run", "runapp"]
+CMD ["functions-framework", "--target", "FunctionFrameworkDemo"]

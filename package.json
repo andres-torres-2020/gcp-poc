@@ -1,6 +1,6 @@
 {
-  "name": "hi",
-  "description": "Simple hello world sample in Node",
+  "name": "function-framework-demo",
+  "description": "Function Framework Demo",
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
@@ -10,10 +10,11 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "author": "Google LLC",
+  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "@google-cloud/functions-framework": "^3.2.0"
   },
   "devDependencies": {}
 }
