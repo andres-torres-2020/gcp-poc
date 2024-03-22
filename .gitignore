@@ -1,4 +1,2 @@
-
 .gcloudignore
-cloudbuild.yamlX
-
+node_modules/*.*

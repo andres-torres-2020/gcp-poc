@@ -1,11 +1,6 @@
-FROM node:alpine
-
+FROM node:20-alpine3.19
 EXPOSE 8080
-ENV PORT=8080
-
-WORKDIR /workspace
-
-COPY . /workspace
-RUN npm update && npm install @google-cloud/functions-framework
-
-CMD ["functions-framework", "--target", "FunctionFrameworkDemo"]
+COPY package.json .
+RUN npm install --only=production --omit=dev
+COPY . .
+ENTRYPOINT ["npm", "run", "start"]

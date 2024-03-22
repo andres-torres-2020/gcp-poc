@@ -5,7 +5,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "functions-framework --target FunctionFrameworkDemo",
+    "fstart": "node index.js"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -13,7 +14,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "express": "^4.17.1",
     "@google-cloud/functions-framework": "^3.2.0"
   },
   "devDependencies": {}

@@ -1,27 +1,28 @@
 # This configuration builds a Docker image and stores logs in a GCS bucket
+#
+# build command:
+#   gcloud builds submit . \
+#    --region=$LOCATION \
+#    --substitutions=_REPOSITORY=$REPOSITORY,\
+#    _IMAGE_NAME=$IMAGE_NAME,\
+#    _LOG_BUCKET=$LOG_BUCKET
 
-# Specify the source code repository URL
-# source:
-#   repoUrl: https://github.com/andres-torres-2020/gcp-poc.git  # Replace with your repository URL
-  #branch: main  # Replace with your desired branch
-
-# Define the build steps
-steps:
-- name: 'gcr.io/cloud-builders/docker'  # Use the Cloud Build Docker builder
-  args: ['build', '-t', 'gcr.io/gcp-poc-385800/gcp-poc:$COMMIT_SHA', '.']  # Build the image from Dockerfile
-options:
-  defaultLogsBucketBehavior: USER_OWNED_BUCKET
-
-# Specify the GCS bucket for logs
-logging:
-  logsBucket: "gs://fc-poc-images/demo-cloudbuild-logs"
-
-# Optional: Specify substitutions
-# These can be used in your Dockerfile or build steps
 substitutions:
-  _VERSION: 1.0.0  # Example substitution
-
-# Optional: Trigger this build on push to the main branch
-triggers:
-  - kind: github
-    branches: ["main"]  # Trigger on pushes to the main branch
+  _REPOSITORY: $_REPOSITORY
+  _IMAGE_NAME: $_IMAGE_NAME
+  _LOG_BUCKET: $_LOG_BUCKET
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '-t'
+  - '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE_NAME}$COMMIT_SHA'
+  - '.'
+  # - '-f'
+  # - '/'
+  # - '$_DOCKERFILE_PATH'
+  # - '.'
+images: ['$LOCATION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_IMAGE_NAME$COMMIT_SHA']
+logsBucket: 'gs://$_LOG_BUCKET/demo-cloudbuild-logs'
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
