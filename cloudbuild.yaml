@@ -1,6 +1,11 @@
-# This configuration builds a Docker image and stores logs in a GCS bucket
+# This configuration is to be executed by a Cloud Build Trigger.
 #
-# build command:
+# These are the execution steps:
+# 1) builds a Docker image and stores logs in a GCS bucket
+# 2) pushes the container image to GCP Artifact Registry
+# 3) deploys the image as Cloud Run Service
+#
+# gcp cloud build command:
 #   gcloud builds submit . \
 #    --region=$LOCATION \
 #    --substitutions=_REPOSITORY=$REPOSITORY,\
