@@ -5,23 +5,46 @@
 #    --region=$LOCATION \
 #    --substitutions=_REPOSITORY=$REPOSITORY,\
 #    _IMAGE_NAME=$IMAGE_NAME,\
-#    _LOG_BUCKET=$LOG_BUCKET
+#    _LOG_BUCKET=$LOG_BUCKET,\
+#    _RUN_SERVICE_NAME=$RUN_SERVICE_NAME
 
 substitutions:
   _REPOSITORY: $_REPOSITORY
   _IMAGE_NAME: $_IMAGE_NAME
   _LOG_BUCKET: $_LOG_BUCKET
+  # _REGION: $RUN_REGION
+  _RUN_SERVICE_NAME: $RUN_SERVICE_NAME
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
   - '-t'
-  - '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE_NAME}$COMMIT_SHA'
+  - '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE_NAME}'
   - '.'
   # - '-f'
   # - '/'
   # - '$_DOCKERFILE_PATH'
   # - '.'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+  - 'run'
+  - 'deploy'
+  - '$_RUN_SERVICE_NAME'
+  - '--image'
+  - 'gcr.io/$PROJECT_ID/$_RUN_SERVICE_NAME'
+  - '--region'
+  - '$LOCATION'
+  - '--port'
+  - '8080'
+# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#   entrypoint: gcloud
+#   args:
+#   - 'run'
+#   - 'services'
+#   - 'update-traffic'
+#   - '$_RUN_SERVICE_NAME'
+#   - '--to-latest'
 images: ['$LOCATION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_IMAGE_NAME$COMMIT_SHA']
 logsBucket: 'gs://$_LOG_BUCKET/demo-cloudbuild-logs'
 options:
