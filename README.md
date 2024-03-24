@@ -73,7 +73,7 @@ gcloud builds connections create github $CONNECTION_NAME \
   --password=$GITHUB_PASSWORD \
   --region=$REGION
 
-# create a trigger for the connection
+# create a build trigger using the github connection (cloudbuild.yaml version)
 export REPOSITORY=gcp-poc
 gcloud builds triggers create github \
   --description="github push trigger for $PROJECT_ID" \
@@ -86,7 +86,7 @@ gcloud builds triggers create github \
   --branch-pattern="^main$" \
   --region=$REGION
 
-# dockerfile version
+# create a build trigger using the github connection (dockerfile version)
 gcloud builds triggers create github \
   --description="github push trigger for $PROJECT_ID" \
   --name="demo-github-push-trigger" \
@@ -98,6 +98,6 @@ gcloud builds triggers create github \
   --branch-pattern="^main$" \
   --region=$REGION
 
-  --connection=$CONNECTION_NAME \
-  --substitutions=_PROJECT_ID=$PROJECT_ID,_REPOSITORY=$REPOSITORY,_REGION=$REGION
+  <!-- --connection=$CONNECTION_NAME \
+  --substitutions=_PROJECT_ID=$PROJECT_ID,_REPOSITORY=$REPOSITORY,_REGION=$REGION -->
   
