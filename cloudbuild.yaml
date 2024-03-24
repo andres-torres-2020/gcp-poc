@@ -25,8 +25,10 @@ steps:
   # - '/'
   # - '$_DOCKERFILE_PATH'
   # - '.'
-  images: ['$LOCATION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_IMAGE_NAME$COMMIT_SHA']
-  logsBucket: 'gs://$_LOG_BUCKET/demo-cloudbuild-logs'
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'push'
+  - '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE_NAME}'
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
   args:
@@ -50,5 +52,7 @@ steps:
 #   - 'update-traffic'
 #   - '$_RUN_SERVICE_NAME'
 #   - '--to-latest'
+# images: ['$LOCATION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_IMAGE_NAME$COMMIT_SHA']
+logsBucket: 'gs://$_LOG_BUCKET/demo-cloudbuild-logs'
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
